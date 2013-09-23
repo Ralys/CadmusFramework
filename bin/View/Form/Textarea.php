@@ -14,20 +14,13 @@ class Textarea extends FormElement {
     
     /**
      * Constructeur de la balise Textarea
-     * @param string $name
-     * @param int $cols Nombre de colonnes
-     * @param int $rows Nombre de lignes
-     * @param string $value
+     * @param array $tab, les propriétés de Textarea
      */
-    public function __construct($name, $cols, $rows, $value = null) {
+    public function __construct(array $tab) {
         
-        parent::__construct($name);
-        
-        $this->cols = $cols;
-        $this->rows = $rows;
-        
-        if($value !== null)
-            $this->setValue($value);
+        foreach($tab as $prop => $val) {
+            $this->$prop = $val;
+        }
     }
     
     /**

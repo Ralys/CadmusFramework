@@ -111,7 +111,7 @@ class Form {
             $form .= "\n\t" . $champ->create() . "\n\t" . $this->separator;
         }
         
-        $token = new Input("token" . ++self::$nb_form , "hidden");
+        $token = new Input(array("name" => "token". ++self::$nb_form, "type" => "hidden"));
         $token->setValue($this->generateToken($token->getName()));
         $form .= $token->create();
         

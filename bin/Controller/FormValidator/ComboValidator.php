@@ -31,7 +31,7 @@ class ComboValidator extends FormValidator {
             $validator->setValue($this->getValue());
             
             if($validator->isValid() == false) {
-                 $this->setErrorMessage($validator->getErrorMessage());
+                $this->setErrorMessage($validator->getErrorMessage());
                 return false;
             }
         }

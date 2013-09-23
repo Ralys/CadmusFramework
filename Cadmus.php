@@ -14,6 +14,8 @@ class Cadmus {
     
     private $appname;
     private $default;
+    
+    public static $name = 'CadmusFramework';
 
     /**
      * Constructeur permettant d'intialiser l'application

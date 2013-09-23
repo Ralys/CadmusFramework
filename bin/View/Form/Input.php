@@ -9,7 +9,6 @@
  */
 class Input extends FormElement {
     
-    private $allTypes;
     private $label;
     private $type;
     private $size;
@@ -27,31 +26,43 @@ class Input extends FormElement {
     private $autofocus;     //booléen
     private $autocomplete;  //booléen
     
+    /* Tous les types possible */
+    private static $allTypes = null;
+    
+    /* Les attributs qui n'ont pas besoin d'être réécrits */
+    private static $alreadyWritten = null;
+            
+    /* Tous les attributs booléens */
+    private static $booleans = null;
+            
     /**
      * Constructeur de la balise Input
-     * @param string $name
-     * @param string $type (text, hidden, email, password, ...)
-     * @param boolean $required Champ requis ou non
-     * @param string $placeholder Text déjà placé dans l'input
+     * @param tab array, les propriétés de l'input
      */
-    public function __construct($name, $type, $required = false, $placeholder = null) {
+    public function __construct(array $tab) {
         
-        parent::__construct($name);
+        if(is_null(self::$allTypes)) {
+            self::$allTypes = array('button', 'checkbox', 'color', 
+                                    'date', 'datetime', 'datetime-local',
+                                    'email', 'file', 'hidden', 'image',
+                                    'month', 'number', 'password', 'radio',
+                                    'range', 'reset', 'search', 'submit', 'tel',
+                                    'text', 'time', 'url', 'week');
+        }
         
-        /* Tous les types possible */
-        $this->allTypes = array('button', 'checkbox', 'color', 
-                                'date', 'datetime', 'datetime-local',
-                                'email', 'file', 'hidden', 'image',
-                                'month', 'number', 'password', 'radio',
-                                'range', 'reset', 'search', 'submit', 'tel',
-                                'text', 'time', 'url', 'week');
+        if(is_null(self::$booleans)) {
+            self::$booleans = array('readonly','required', 'disabled', 
+                                    'checked', 'autofocus', 'autocomplete');
+        }
         
-        $this->type = $type;
+        if(is_null(self::$alreadyWritten)) {
+            self::$alreadyWritten = array('name', 'class', 'id', 'style', 'value');
+        }
         
-        if($placeholder !== null)
-            $this->placeholder = $placeholder;
         
-        $this->required = $required;
+        foreach($tab as $prop => $val) {
+            $this->$prop = $val;
+        }
     }
     
     /**
@@ -60,20 +71,17 @@ class Input extends FormElement {
      * @throws Exception
      */
     public function create() {
-        if(!in_array($this->type, $this->allTypes)) {
+        if(!in_array($this->type, self::$allTypes)) {
             throw new Exception("Type de l'input incorrect");
         }
         
         $input = parent::create();
         
         $tab = get_object_vars($this);
-        $firstProperty = key($tab);
-        unset($tab[$firstProperty]);
-        $firstProperty = key($tab);
-        unset($tab[$firstProperty]);
         
         if(isset($this->label)) {
             $id = $this->getId();
+            
             if(!isset($id))
                 throw new Exception("Un id doit être déclaré pour l'input " . $this->getName());
             else
@@ -84,21 +92,18 @@ class Input extends FormElement {
             $input .= ' value="'.$this->getValue().'"';
         }
         
-        $i = 0;
-        $limit = 9;    // A partir de quand les champs sont des booléens
         foreach($tab as $attribut => $valeur) {
-            if($i > $limit) {
-                if(isset($this->$attribut) && $this->$attribut) {
-                    $input .= " " . $attribut;
-                }
+            
+            if(!in_array($attribut, self::$alreadyWritten)) {
                 
-            } else {
-                if(isset($this->$attribut)) {
-                    $input .= " " . $attribut . '="' . $valeur . '"';
+                if(in_array($attribut, self::$booleans)) {
+                    if(isset($this->$attribut) && $this->$attribut)
+                        $input .= " " . $attribut;
+                } else {
+                    if(isset($this->$attribut))
+                        $input .= " " . $attribut . '="' . $valeur . '"';
                 }
             }
-            
-            $i++;
         }
         
         $input .= " />";

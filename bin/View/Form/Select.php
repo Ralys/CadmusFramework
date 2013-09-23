@@ -17,18 +17,22 @@ class Select extends FormElement {
     
     /**
      * Constructeur de la balise select
-     * @param string $name
+     * @param array $tab, les propriétés du select
      * @param array $options des objets Option ou Optgroup
      */
-    public function __construct($name, array $options = null) {
-        parent::__construct($name);
+    public function __construct(array $tab, array $options = null) {
+        
+        foreach($tab as $prop => $val) {
+            $this->$prop = $val;
+        }
+        
         $this->options = array();
 
-        if($options !== null) {
+        if(!is_null($options)) {
             foreach($options as $option) {
                 if($option instanceof Option)
                     $this->options[$option->getValue()] = $option;
-                else if ($option instanceof Optgroup) {
+                else if ($option instanceof OptGroup) {
                     $this->options[] = $option;
                 }
                     
@@ -56,7 +60,7 @@ class Select extends FormElement {
         }
         
         if(isset($this->size)) {
-            $select .= " size=" . $this->size;
+            $select .= ' size="' . $this->size . '"';
         }
         
         $select .= ">";
@@ -154,10 +158,10 @@ class Select extends FormElement {
     
     /**
      * Méthode d'ajout d'options
-     * @param Optgroup $optGroup
+     * @param OptGroup $optGroup
      * @return \Select
      */
-    public function addOptionGroup(Optgroup $optGroup) {
+    public function addOptionGroup(OptGroup $optGroup) {
         $this->options[] = $optGroup;
         return $this;
     }

@@ -22,7 +22,8 @@ class Autoloader {
         if(is_dir($dir)) {
            if($od = opendir($dir)) {
                while(($file = readdir($od)) !== false) {
-                   if($file != '.' && $file != '..') {
+                   
+                   if($file != '.' && $file != '..' && $file != Cadmus::$name) {
                        $complete = $dir.'/'.$file;
                        
                        if(is_file($complete) && $file == $class.'.php') {
@@ -40,6 +41,44 @@ class Autoloader {
         
     }
     
+    public static function ControllerLoader($class) {
+        $path = Cadmus::$name . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . 
+                "Controller" . DIRECTORY_SEPARATOR . $class . ".php";
+        
+        if(file_exists($path)) include_once($path);
+        else {
+            
+            $path = Cadmus::$name . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . 
+                "Controller" . DIRECTORY_SEPARATOR . 'FormValidator' . DIRECTORY_SEPARATOR . $class . ".php";
+            
+            if(file_exists($path)) include_once($path);
+        }
+    }
+    
+    public static function ModelLoader($class) {
+        $path = Cadmus::$name . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . 
+                "Model" . DIRECTORY_SEPARATOR . $class . ".php";
+        
+        if(file_exists($path)) include_once($path);
+    }
+    
+    public static function ViewLoader($class) {
+        
+        $path = Cadmus::$name . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . 
+                "View" . DIRECTORY_SEPARATOR . $class . ".php";
+        
+        
+        if(file_exists($path)) include_once($path);
+        else {
+            
+            $path = Cadmus::$name . DIRECTORY_SEPARATOR . "bin" . DIRECTORY_SEPARATOR . 
+                "View" . DIRECTORY_SEPARATOR . 'Form' . DIRECTORY_SEPARATOR . $class . ".php";
+        
+            if(file_exists($path)) include_once($path);
+        }
+        
+    }
+    
     /**
      * Loader principale de classes 
      * @param string $class
@@ -49,6 +88,12 @@ class Autoloader {
     }
 }
 
+/* Loading classes from bin */
+spl_autoload_register("Autoloader::ControllerLoader");
+spl_autoload_register("Autoloader::ModelLoader");
+spl_autoload_register("Autoloader::ViewLoader");
+
+/* Loading user classes */
 spl_autoload_register("Autoloader::MainLoader");
 
 ?>

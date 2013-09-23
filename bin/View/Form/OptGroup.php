@@ -7,10 +7,11 @@
  * 
  * @author Stéphane
  */
-class Optgroup extends FormElement {
+class OptGroup extends FormElement {
     
-    private $disabled;  //booléen
     private $label;
+    private $disabled;  //booléen
+    private $options;
     
     /**
      * Constructeur de la balise Optgroup
@@ -21,7 +22,7 @@ class Optgroup extends FormElement {
         $this->label = $label;
         $this->options = array();
 
-        if($options !== null) {
+        if(!is_null($options)) {
             foreach($options as $option) {
                 $this->options[$option->getValue()] = $option;
             }
@@ -75,7 +76,7 @@ class Optgroup extends FormElement {
     /**
      * Modifie le booléen qui définit si le groupe d'option est desactivé
      * @param boolean $disabled
-     * @return \Optgroup
+     * @return \OptGroup
      */
     public function setDisabled($disabled) {
         $this->disabled = $disabled;
@@ -93,7 +94,7 @@ class Optgroup extends FormElement {
     /**
      * Modifie le label
      * @param string $label
-     * @return \Optgroup
+     * @return \OptGroup
      */
     public function setLabel($label) {
         $this->label = $label;

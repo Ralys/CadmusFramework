@@ -9,12 +9,12 @@
  */
 class FormElement {    
     
-    private $name;
+    protected $name;
     /* Pour le CSS et le JavaScript */
-    private $class;
-    private $id;
-    private $style;
-    private $value;
+    protected $class;
+    protected $id;
+    protected $style;
+    protected $value;
     
     /**
      * Constructeur intialisant le nom

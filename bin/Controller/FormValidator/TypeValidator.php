@@ -55,9 +55,6 @@ class TypeValidator extends FormValidator {
             case "boolean":
                 $bool = (strcasecmp("true", $val) === 0) || (strcasecmp("false", $val) === 0);
                 break;
-            case "string":
-                $bool = is_string($val);
-                break;
         }
         
         return $bool;
