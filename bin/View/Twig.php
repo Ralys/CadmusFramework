@@ -17,7 +17,7 @@ class Twig {
         
         if(self::$twig == null) {
             Twig_Autoloader::register();
-            $loader = new Twig_Loader_Filesystem(LAYOUT_DIR); // Dossier contenant les templates
+            $loader = new Twig_Loader_Filesystem(LAYOUT); // Dossier contenant les templates
         
             self::$twig = new Twig_Environment($loader, array('cache' => false));
             

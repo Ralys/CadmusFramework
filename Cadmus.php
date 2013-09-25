@@ -1,7 +1,6 @@
 <?php
 
 include_once ('Autoloader.php');
-include_once('config.php');
 
 /**
  * Description of Cadmus
@@ -25,6 +24,29 @@ class Cadmus {
     public function __construct($appname, $default) {
         $this->appname = $appname;
         $this->default = $default;
+    }
+    
+    /**
+     * Méthode permettant de définir les paramètres de configuration
+     * pour la connexion à la base de données ainsi qu'à l'accès au dossier contenant
+     * les vues
+     * 
+     * Ex : array('hostname' => ..., 'dbname' => ..., 'login' => ...,
+     *            'password' => ..., 'layout' => ...)
+     * 
+     * @param array $tab tableau contenant les infos suivantes 
+     */
+    public function config(array $tab) {
+        
+        $params = array('hostname', 'dbname', 'login', 'password', 'layout');
+        
+        if(empty($tab)) {
+            throw new Exception("Veuillez renseigner les paramètres de configuration");
+        } else {
+            foreach($params as $k => $v) {
+                define(strtoupper($v), $tab[$v]);
+            }
+        }
     }
 
     /**

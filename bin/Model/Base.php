@@ -18,7 +18,7 @@ class Base {
      */
     private static function connect() {
         try {
-            self::$bdd = new PDO('mysql:host='.HOSTNAME.';dbname='.DBNAME, LOGIN, PWD);
+            self::$bdd = new PDO('mysql:host='.HOSTNAME.';dbname='.DBNAME, LOGIN, PASSWORD);
             self::$bdd->exec("SET CHARACTER SET utf8");
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
