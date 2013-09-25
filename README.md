@@ -1,13 +1,16 @@
 CadmusFramework
-===============
+===
 
 CadmusFramework est un framework PHP léger et facile d'utilisation.
 Il permet de développer très rapidement une application web. Basé sur le design pattern Model View Controller, 
 CadmusFramework offre une bonne gestion des modèles et contrôleurs.
 Quant à la vue, le moteur de template Twig est utilisé.
 
+#### Comment l'utiliser ? 
+	Il suffit de placer le dossier CadmusFramework dans le dossier de votre projet.
 
-Exemple de point d'entrée d'une application utilisant CadmusFramework :
+Exemple de point d'entrée :
+---
 
 ```php
     // index.php
@@ -30,7 +33,7 @@ Exemple de point d'entrée d'une application utilisant CadmusFramework :
 
 
 Exemple de modèle :
------------------
+---
 
 * Tous les attributs de tous vos modèles doivent être définis en temps que "protected" afin que la classe mère
 puisse accéder à ceux-ci.
@@ -54,7 +57,7 @@ De plus, des méthodes find, findBy, findAll ... sont à disposition afin de ré
 instances de ce modèle.
 
 Exemple de contrôleur :
----------------------
+---
 
 * Tous les noms de contrôleurs doivent se terminer par "Controller" 
 * Toutes les méthodes étant utiles en temps qu'action doivent se terminer par "Action"
