@@ -24,7 +24,7 @@ Exemple de point d'entrée :
 					   'dbname' => '...',
 					   'login' => '...',
 					   'password' => '...',
-					   // layout est ici le nom du dossier contenant l'ensemble des fichier .twig
+					   // layout est ici le nom du dossier contenant l'ensemble des fichiers .twig
 					   'layout' => '...'));
 	
 	$app->run();
