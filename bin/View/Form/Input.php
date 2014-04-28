@@ -19,12 +19,12 @@ class Input extends FormElement {
     private $min;
     private $max;
     private $accept;
-    private $readonly;      //booléen
-    private $required;      //booléen
-    private $disabled;      //booléen
-    private $checked;       //booléen
-    private $autofocus;     //booléen
-    private $autocomplete;  //booléen
+    private $readonly = false;      //booléen
+    private $required = false;      //booléen
+    private $disabled = false;      //booléen
+    private $checked = false;       //booléen
+    private $autofocus = false;     //booléen
+    private $autocomplete = false;  //booléen
     
     /* Tous les types possible */
     private static $allTypes = null;
@@ -56,7 +56,7 @@ class Input extends FormElement {
         }
         
         if(is_null(self::$alreadyWritten)) {
-            self::$alreadyWritten = array('name', 'class', 'id', 'style', 'value');
+            self::$alreadyWritten = array('name', 'class', 'id', 'style', 'value', 'label');
         }
         
         
@@ -83,9 +83,10 @@ class Input extends FormElement {
             $id = $this->getId();
             
             if(!isset($id))
-                throw new Exception("Un id doit être déclaré pour l'input " . $this->getName());
-            else
-                $input = '<label for="'. $this->getId() . '">'. $this->getLabel() . '</label>' . $input;
+                //throw new Exception("Un id doit être déclaré pour l'input " . $this->getName());
+                $this->setId($this->getName());
+            
+            $input = '<label style="display:inline-block;margin-right:5px;" for="'. $this->getId() . '">'. $this->getLabel() . '</label>' . $input;
         }
         
         if(!is_null($this->getValue())) {

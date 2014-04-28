@@ -112,11 +112,17 @@ abstract class Controller {
     }
     
     /**
-     * Méthode permettant d'ajouter un modèle que l'on souhaite persister/sauvegarder
-     * @param Model model
+     * Méthode permettant d'ajouter un ou des modèles que l'on souhaite persister/sauvegarder
+     * @param Model|Array $m
      */
-    public function persist(Model $model) {
-        $this->persist[] = $model;
+    public function persist($m) {
+        if($m instanceof Model) {
+            $this->persist[] = $m;
+        } else if(is_array($m)) {
+            foreach($m as $model) {
+                $this->persist[] = $model;
+            }
+        }
     }
 
     /**

@@ -99,7 +99,7 @@ class Form {
             $form .= 'style="'.$this->style.'" ';
                 
                 
-        $form .= 'method="'.$this->method.'" action="'. Controller::generateURL($this->action) . '">';
+        $form .= 'method="'.$this->method.'" action="'. Router::pathto($this->action) . '">';
         
         if($this->fieldset)
             $form .= "\n<fieldset>";
@@ -126,9 +126,9 @@ class Form {
     public function generateToken($name) {
         $token = uniqid(rand(), true);
 
-	$_SESSION[$name] = array("_token" => $token,
-                                 "date" => time());
-	return $token;
+    	$_SESSION[$name] = array("_token" => $token,
+                                     "date" => time());
+    	return $token;
     }
     
     public function __toString() {
@@ -289,10 +289,35 @@ class Form {
     
     public function hydrate($data) {
         foreach($data as $name => $value) {
-            if($this->getElementByName($name) !== null) {
-                $this->getElementByName($name)->setValue($value);
+            $element = $this->getElementByName($name);
+            
+            if(!is_null($element)) {
+                if($element instanceof Input && $element->getType() == "checkbox") {
+                    $element->setChecked(($value != "0"));
+                } else {
+                    $element->setValue($value);
+                }
             }
         }
+    }
+
+    public function toArray() {
+        $data = array();
+        $elements = $this->getAllElements();
+
+        foreach($elements as $name => $element) {
+            if(!($element instanceof Input && $element->getType() == "submit")) {
+                $value = $element->getValue();
+                
+                if($element instanceof Input && $element->getType() == "checkbox") {
+                    $value = $element->getChecked();
+                }
+                
+                $data[$name] = $value;
+            }
+        }
+
+        return $data;
     }
         
     /**

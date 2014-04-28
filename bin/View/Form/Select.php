@@ -9,9 +9,10 @@
  */
 class Select extends FormElement {
     
-    private $autofocus; //booléen
-    private $disabled;  //booléen
-    private $required;  //booléen
+    private $label;
+    private $autofocus = false;     //booléen
+    private $disabled  = false;     //booléen
+    private $required  = false;     //booléen
     private $size;
     private $options;
     
@@ -46,6 +47,15 @@ class Select extends FormElement {
      */
     public function create() {
         $select = parent::create();
+
+        if(isset($this->label)) {
+            $id = $this->getId();
+            
+            if(!isset($id))
+                $this->setId($this->getName());
+            
+            $select = '<label style="display:inline-block;margin-right:5px;" for="'. $this->getId() . '">'. $this->getLabel() . '</label>' . $select;
+        }
         
         if(isset($this->autofocus) && $this->autofocus) {
             $select .= " autofocus";
@@ -73,6 +83,24 @@ class Select extends FormElement {
         
         return $select;
     }
+
+    /**
+     * Permet d'obtenir le label du select
+     * @return string
+     */
+    public function getLabel() {
+        return $this->label;
+    }
+
+    /**
+     * Permet de modifier le label du select
+     * @param string $label
+     * @return \Select
+     */
+    public function setLabel($label) {
+        $this->label = $label;
+        return $this;
+    }   
     
     /**
      * Permet de défnir si le select est en autofocus

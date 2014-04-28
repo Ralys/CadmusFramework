@@ -20,9 +20,7 @@ abstract class Model {
      */
     public function __construct(array $data = null) {
         if(!is_null($data)) {
-            foreach($data as $attr => $value) {
-                $this->set($attr, $value);
-            }
+            $this->hydrate($data);
         }
     }
     

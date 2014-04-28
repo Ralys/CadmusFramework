@@ -18,8 +18,13 @@ class Option extends FormElement {
      * @param string $value
      * @param boolean $selected Sélectionné par défaut ou non
      */
-    public function __construct($value, $selected = false) {
+    public function __construct($value, $label = null, $selected = false) {
         $this->setValue($value);
+
+        if(!is_null($label)) {
+            $this->label = $label;
+        }
+
         $this->selected = $selected;
     }
     
@@ -34,8 +39,8 @@ class Option extends FormElement {
             $option .= " disabled";
         }
         
-        if(isset($label)) {
-            $option .= " label=" . $this->label;
+        if(isset($this->label)) {
+            $option .= ' label="' . $this->label . '"';
         }
         
         if(isset($this->selected) && $this->selected) {
