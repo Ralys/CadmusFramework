@@ -48,7 +48,7 @@ class Date {
      * @return string
      */
     public function englishFormat() {
-        return $this->date_format_en->format('Y-m-d H:i:s');;
+        return $this->date_format_en->format('Y-m-d H:i:s');
     }
     
     /**

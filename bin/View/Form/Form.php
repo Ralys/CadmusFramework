@@ -99,7 +99,7 @@ class Form {
             $form .= 'style="'.$this->style.'" ';
                 
                 
-        $form .= 'method="'.$this->method.'" action="'. Router::pathto($this->action) . '">';
+        $form .= 'method="'.$this->method.'" action="'. $this->action . '">';
         
         if($this->fieldset)
             $form .= "\n<fieldset>";

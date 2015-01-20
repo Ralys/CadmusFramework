@@ -95,8 +95,7 @@ abstract class Controller {
      */
     public function redirect($route, $params = null) {
         $url = self::generateURL($route, $params);
-        header('Location: ' . $url);
-        return;
+        return header('Location: ' . $url);
     }
     
     /**
